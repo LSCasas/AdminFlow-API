@@ -1,10 +1,10 @@
-const Record = require("../models/Record");
-const User = require("../models/User");
-const Consumable = require("../models/Consumable");
-const Area = require("../models/Area");
-const createUser = require("./user.usecase");
-const createConsumable = require("./consumable.usecase");
-const createArea = require("./area.usecase");
+const Record = require("../models/record.model");
+const User = require("../models/user.model");
+const Consumable = require("../models/consumable.model");
+const Area = require("../models/area.model");
+const { createUser } = require("./user.usecase");
+const { createConsumable } = require("./consumable.usecase");
+const { createArea } = require("./area.usecase");
 const createError = require("http-errors");
 
 // Crear Registro

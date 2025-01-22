@@ -1,0 +1,118 @@
+const express = require("express");
+const router = express.Router();
+const {
+  createRecord,
+  getRecords,
+  getRecordById,
+  updateRecord,
+  deleteRecord,
+} = require("../usecases/redord.usecase");
+
+// Create a record
+router.post("/", async (req, res) => {
+  try {
+    const {
+      userName,
+      consumableName,
+      consumableStock,
+      areaName,
+      quantity,
+      date,
+      signature,
+    } = req.body;
+    const newRecord = await createRecord(
+      userName,
+      consumableName,
+      consumableStock,
+      areaName,
+      quantity,
+      date,
+      signature
+    );
+    res.status(201).json({
+      success: true,
+      data: newRecord,
+    });
+  } catch (error) {
+    console.error("Error creating record:", error);
+    res.status(500).json({
+      success: false,
+      error: "Error creating record",
+    });
+  }
+});
+
+// Get all records
+router.get("/", async (req, res) => {
+  try {
+    const filter = req.query;
+    const records = await getRecords(filter);
+    res.json({
+      success: true,
+      data: records,
+    });
+  } catch (error) {
+    console.error("Error fetching records:", error);
+    res.status(500).json({
+      success: false,
+      error: "Error fetching records",
+    });
+  }
+});
+
+// Get a record by id
+router.get("/:id", async (req, res) => {
+  try {
+    const recordId = req.params.id;
+    const record = await getRecordById(recordId);
+    res.json({
+      success: true,
+      data: record,
+    });
+  } catch (error) {
+    console.error("Error fetching record by ID:", error);
+    res.status(error.status || 500).json({
+      success: false,
+      error: error.message,
+    });
+  }
+});
+
+// Update a record
+router.patch("/:id", async (req, res) => {
+  try {
+    const recordId = req.params.id;
+    const updatedData = req.body;
+    const updatedRecord = await updateRecord(recordId, updatedData);
+    res.json({
+      success: true,
+      data: updatedRecord,
+    });
+  } catch (error) {
+    console.error("Error updating record:", error);
+    res.status(error.status || 500).json({
+      success: false,
+      error: error.message,
+    });
+  }
+});
+
+// Delete a record by id
+router.delete("/:id", async (req, res) => {
+  try {
+    const recordId = req.params.id;
+    await deleteRecord(recordId);
+    res.json({
+      success: true,
+      message: "Record deleted successfully",
+    });
+  } catch (error) {
+    console.error("Error deleting record:", error);
+    res.status(error.status || 500).json({
+      success: false,
+      error: error.message,
+    });
+  }
+});
+
+module.exports = router;

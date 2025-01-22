@@ -3,6 +3,7 @@ const express = require("express");
 const consumableRouter = require("./routes/consumable.router");
 const userRouter = require("./routes/user.router");
 const areaRouter = require("./routes/area.router");
+const recordRouter = require("./routes/record.router");
 
 const app = express();
 
@@ -12,6 +13,7 @@ app.use(express.json());
 app.use("/consumables", consumableRouter);
 app.use("/user", userRouter);
 app.use("/area", areaRouter);
+app.use("/record", recordRouter);
 
 app.get("/", (req, res) => {
   res.json({
