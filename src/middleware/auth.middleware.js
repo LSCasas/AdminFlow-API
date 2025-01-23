@@ -10,7 +10,7 @@ async function auth(req, res, next) {
     }
 
     const payload = jwt.verify(token);
-    const user = await userUseCase.getById(payload.id);
+    const user = await userUseCase.getAdminById(payload.id);
 
     req.user = user;
     next();

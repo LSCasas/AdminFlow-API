@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const authMiddleware = require("../middleware/auth.middleware");
 const {
   createConsumable,
   getAllConsumables,
@@ -9,7 +10,7 @@ const {
 } = require("../usecases/consumable.usecase");
 
 // Create a new consumable
-router.post("/", async (req, res) => {
+router.post("/", authMiddleware, async (req, res) => {
   try {
     const { name, stock } = req.body;
     const newConsumable = await createConsumable(name, stock);
@@ -27,7 +28,7 @@ router.post("/", async (req, res) => {
 });
 
 // Get all consumables
-router.get("/", async (req, res) => {
+router.get("/", authMiddleware, async (req, res) => {
   try {
     const consumables = await getAllConsumables();
     res.json({
@@ -44,7 +45,7 @@ router.get("/", async (req, res) => {
 });
 
 // Get a single consumable by ID
-router.get("/:id", async (req, res) => {
+router.get("/:id", authMiddleware, async (req, res) => {
   try {
     const consumableId = req.params.id;
     const consumable = await getConsumableById(consumableId);
@@ -62,7 +63,7 @@ router.get("/:id", async (req, res) => {
 });
 
 // Update a consumable
-router.patch("/:id", async (req, res) => {
+router.patch("/:id", authMiddleware, async (req, res) => {
   try {
     const consumableId = req.params.id;
     const updates = req.body;
@@ -81,7 +82,7 @@ router.patch("/:id", async (req, res) => {
 });
 
 // Delete a consumable
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", authMiddleware, async (req, res) => {
   try {
     const consumableId = req.params.id;
     await deleteConsumable(consumableId);

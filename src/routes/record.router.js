@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const authMiddleware = require("../middleware/auth.middleware");
 const {
   createRecord,
   getRecords,
@@ -9,7 +10,7 @@ const {
 } = require("../usecases/redord.usecase");
 
 // Create a record
-router.post("/", async (req, res) => {
+router.post("/", authMiddleware, async (req, res) => {
   try {
     const {
       userName,
@@ -43,7 +44,7 @@ router.post("/", async (req, res) => {
 });
 
 // Get all records
-router.get("/", async (req, res) => {
+router.get("/", authMiddleware, async (req, res) => {
   try {
     const filter = req.query;
     const records = await getRecords(filter);
@@ -61,7 +62,7 @@ router.get("/", async (req, res) => {
 });
 
 // Get a record by id
-router.get("/:id", async (req, res) => {
+router.get("/:id", authMiddleware, async (req, res) => {
   try {
     const recordId = req.params.id;
     const record = await getRecordById(recordId);
@@ -79,7 +80,7 @@ router.get("/:id", async (req, res) => {
 });
 
 // Update a record
-router.patch("/:id", async (req, res) => {
+router.patch("/:id", authMiddleware, async (req, res) => {
   try {
     const recordId = req.params.id;
     const updatedData = req.body;
@@ -98,7 +99,7 @@ router.patch("/:id", async (req, res) => {
 });
 
 // Delete a record by id
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", authMiddleware, async (req, res) => {
   try {
     const recordId = req.params.id;
     await deleteRecord(recordId);

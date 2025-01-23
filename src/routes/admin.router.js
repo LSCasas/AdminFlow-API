@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const authMiddleware = require("../middleware/auth.middleware");
 const {
   createAdmin,
   getAllAdmin,
@@ -28,7 +29,7 @@ router.post("/", async (req, res) => {
 });
 
 // Get all admins
-router.get("/", async (req, res) => {
+router.get("/", authMiddleware, async (req, res) => {
   try {
     const admins = await getAllAdmin();
     res.json({
@@ -45,7 +46,7 @@ router.get("/", async (req, res) => {
 });
 
 // Get an admin by ID
-router.get("/:id", async (req, res) => {
+router.get("/:id", authMiddleware, async (req, res) => {
   try {
     const adminId = req.params.id;
     const admin = await getAdminById(adminId);
@@ -63,7 +64,7 @@ router.get("/:id", async (req, res) => {
 });
 
 // Get an admin by email
-router.get("/email/:email", async (req, res) => {
+router.get("/email/:email", authMiddleware, async (req, res) => {
   try {
     const { email } = req.params;
     const admin = await getAdminByEmail(email);
@@ -81,7 +82,7 @@ router.get("/email/:email", async (req, res) => {
 });
 
 // Update an admin
-router.patch("/:id", async (req, res) => {
+router.patch("/:id", authMiddleware, async (req, res) => {
   try {
     const adminId = req.params.id;
     const { email, password } = req.body;
@@ -100,7 +101,7 @@ router.patch("/:id", async (req, res) => {
 });
 
 // Delete an admin
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", authMiddleware, async (req, res) => {
   try {
     const adminId = req.params.id;
     await deleteAdmin(adminId);

@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const authMiddleware = require("../middleware/auth.middleware");
 const {
   createArea,
   getAllAreas,
@@ -9,7 +10,7 @@ const {
 } = require("../usecases/area.usecase");
 
 // Create a new area
-router.post("/", async (req, res) => {
+router.post("/", authMiddleware, async (req, res) => {
   try {
     const { name } = req.body;
     const newArea = await createArea(name);
@@ -27,7 +28,7 @@ router.post("/", async (req, res) => {
 });
 
 // Get all areas
-router.get("/", async (req, res) => {
+router.get("/", authMiddleware, async (req, res) => {
   try {
     const areas = await getAllAreas();
     res.json({
@@ -44,7 +45,7 @@ router.get("/", async (req, res) => {
 });
 
 // Get a single area by ID
-router.get("/:id", async (req, res) => {
+router.get("/:id", authMiddleware, async (req, res) => {
   try {
     const areaId = req.params.id;
     const area = await getAreaById(areaId);
@@ -62,7 +63,7 @@ router.get("/:id", async (req, res) => {
 });
 
 // Update an area
-router.patch("/:id", async (req, res) => {
+router.patch("/:id", authMiddleware, async (req, res) => {
   try {
     const areaId = req.params.id;
     const { name } = req.body;
@@ -81,7 +82,7 @@ router.patch("/:id", async (req, res) => {
 });
 
 // Delete an area
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", authMiddleware, async (req, res) => {
   try {
     const areaId = req.params.id;
     await deleteArea(areaId);
