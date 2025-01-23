@@ -1,65 +1,78 @@
 const express = require("express");
-const createError = require("http-errors");
-const adminUseCase = require("../usecases/admin.usecase");
-
 const router = express.Router();
+const {
+  createAdmin,
+  getAllAdmin,
+  getAdminById,
+  getAdminByEmail,
+  updateAdmin,
+  deleteAdmin,
+} = require("../usecases/admin.usecase");
 
-// Get all admin
-router.get("/", async (req, res) => {
-  try {
-    const admins = await adminUseCase.getAllAdmin();
-    res.json({
-      success: true,
-      data: { admins },
-    });
-  } catch (error) {
-    res.status(error.status || 500).json({
-      success: false,
-      error: error.message,
-    });
-  }
-});
-
-// Get admin by id
-router.get("/:id", async (req, res) => {
-  try {
-    const { id } = req.params;
-    const admin = await adminUseCase.getAdminById(id);
-    if (!admin) {
-      throw createError(404, "Admin not found");
-    }
-    res.json({
-      success: true,
-      data: { admin },
-    });
-  } catch (error) {
-    res.status(error.status || 500).json({
-      success: false,
-      error: error.message,
-    });
-  }
-});
-
-// Create an admin
+// Create a new admin
 router.post("/", async (req, res) => {
   try {
-    const { name, email, password } = req.body;
-
-    const existingAdmin = await adminUseCase.getAdminByEmail(email);
-    if (existingAdmin) {
-      throw createError(409, "Email already in use");
-    }
-
-    const adminCreated = await adminUseCase.createAdmin({
-      name,
-      email,
-      password,
-    });
+    const { email, password } = req.body;
+    const newAdmin = await createAdmin(email, password);
     res.status(201).json({
       success: true,
-      data: { admin: adminCreated },
+      data: newAdmin,
     });
   } catch (error) {
+    console.error("Error creating admin:", error);
+    res.status(500).json({
+      success: false,
+      error: "Error creating admin",
+    });
+  }
+});
+
+// Get all admins
+router.get("/", async (req, res) => {
+  try {
+    const admins = await getAllAdmin();
+    res.json({
+      success: true,
+      data: admins,
+    });
+  } catch (error) {
+    console.error("Error fetching admins:", error);
+    res.status(500).json({
+      success: false,
+      error: "Error fetching admins",
+    });
+  }
+});
+
+// Get an admin by ID
+router.get("/:id", async (req, res) => {
+  try {
+    const adminId = req.params.id;
+    const admin = await getAdminById(adminId);
+    res.json({
+      success: true,
+      data: admin,
+    });
+  } catch (error) {
+    console.error("Error fetching admin by ID:", error);
+    res.status(error.status || 500).json({
+      success: false,
+      error: error.message,
+    });
+  }
+});
+
+// Get an admin by email
+router.get("/email/:email", async (req, res) => {
+  try {
+    const { email } = req.params;
+    const admin = await getAdminByEmail(email);
+    res.json({
+      success: true,
+      data: admin,
+    });
+  } catch (error) {
+    console.error("Error fetching admin by email:", error);
     res.status(error.status || 500).json({
       success: false,
       error: error.message,
@@ -68,24 +81,17 @@ router.post("/", async (req, res) => {
 });
 
 // Update an admin
-router.put("/:id", async (req, res) => {
+router.patch("/:id", async (req, res) => {
   try {
-    const { id } = req.params;
-    const { name, email, password } = req.body;
-
-    const updatedAdmin = await adminUseCase.updateAdmin(id, {
-      name,
-      email,
-      password,
-    });
-    if (!updatedAdmin) {
-      throw createError(404, "Admin not found");
-    }
+    const adminId = req.params.id;
+    const { email, password } = req.body;
+    const updatedAdmin = await updateAdmin(adminId, { email, password });
     res.json({
       success: true,
-      data: { admin: updatedAdmin },
+      data: updatedAdmin,
     });
   } catch (error) {
+    console.error("Error updating admin:", error);
     res.status(error.status || 500).json({
       success: false,
       error: error.message,
@@ -96,13 +102,14 @@ router.put("/:id", async (req, res) => {
 // Delete an admin
 router.delete("/:id", async (req, res) => {
   try {
-    const { id } = req.params;
-    const result = await adminUseCase.deleteAdmin(id);
+    const adminId = req.params.id;
+    await deleteAdmin(adminId);
     res.json({
       success: true,
-      message: result.message,
+      message: "Admin deleted successfully",
     });
   } catch (error) {
+    console.error("Error deleting admin:", error);
     res.status(error.status || 500).json({
       success: false,
       error: error.message,

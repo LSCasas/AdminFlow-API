@@ -1,5 +1,5 @@
 const createError = require("http-errors");
-const userUseCase = require("../usecases/users.usecase");
+const userUseCase = require("../usecases/admin.usecase");
 const jwt = require("../lib/jwt");
 
 async function auth(req, res, next) {
