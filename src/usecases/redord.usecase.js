@@ -7,7 +7,7 @@ const { createConsumable } = require("./consumable.usecase");
 const { createArea } = require("./area.usecase");
 const createError = require("http-errors");
 
-// Crear Registro
+// Create a new record
 const createRecord = async (
   userName,
   consumableName,
@@ -41,8 +41,6 @@ const createRecord = async (
       user_id: user._id,
       area_id: area._id,
       consumable_id: consumable._id,
-      consumableQuantity,
-      userSignature,
       date,
     });
 
@@ -53,7 +51,7 @@ const createRecord = async (
   }
 };
 
-// Obtener todos los registros
+// Get all records
 const getRecords = async (filter = {}) => {
   try {
     const records = await Record.find(filter)
@@ -66,7 +64,7 @@ const getRecords = async (filter = {}) => {
   }
 };
 
-// Obtener un registro por su ID
+// Get record by id
 const getRecordById = async (id) => {
   try {
     const record = await Record.findById(id)
@@ -79,7 +77,7 @@ const getRecordById = async (id) => {
   }
 };
 
-// Actualizar un registro por su ID
+// Update a register by id
 const updateRecord = async (id, updatedData) => {
   try {
     const updatedRecord = await Record.findByIdAndUpdate(id, updatedData, {
@@ -94,7 +92,7 @@ const updateRecord = async (id, updatedData) => {
   }
 };
 
-// Eliminar un registro por su ID
+// Delete a register
 const deleteRecord = async (id) => {
   try {
     const deletedRecord = await Record.findByIdAndDelete(id);

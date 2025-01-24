@@ -17,18 +17,18 @@ router.post("/", authMiddleware, async (req, res) => {
       consumableName,
       consumableStock,
       areaName,
-      quantity,
+      consumableQuantity,
       date,
-      signature,
+      userSignature,
     } = req.body;
     const newRecord = await createRecord(
       userName,
       consumableName,
       consumableStock,
       areaName,
-      quantity,
+      consumableQuantity,
       date,
-      signature
+      userSignature
     );
     res.status(201).json({
       success: true,
