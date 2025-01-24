@@ -137,9 +137,7 @@ dist
 .webpack/
 
 # Request http
-request.http
-post.http
-
+request/
 
 # SvelteKit build / generate output
 .svelte-kit

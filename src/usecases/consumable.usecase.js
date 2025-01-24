@@ -2,11 +2,12 @@ const Consumable = require("../models/consumable.model");
 const createError = require("http-errors");
 
 // Create a consumable
-const createConsumable = async (name, stock) => {
+const createConsumable = async (name, stock, quantity) => {
   try {
     const newConsumable = new Consumable({
       name,
-      stock,
+      stock: stock ?? null, // Usa null si stock no está definido
+      quantity,
     });
 
     await newConsumable.save();

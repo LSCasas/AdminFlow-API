@@ -2,9 +2,9 @@ const User = require("../models/user.model");
 const createError = require("http-errors");
 
 // Create an user
-const createUser = async (name) => {
+const createUser = async (name, signature) => {
   try {
-    const newUser = new User({ name });
+    const newUser = new User({ name, signature });
     await newUser.save();
     return newUser;
   } catch (error) {
@@ -37,11 +37,12 @@ const getUserById = async (id) => {
 };
 
 // Update an user
-const updateUserById = async (id, name) => {
+const updateUserById = async (id, name, signature) => {
   try {
     const user = await User.findByIdAndUpdate(
       id,
       { name },
+      { signature },
       { new: true, runValidators: true }
     );
     if (!user) throw createError(404, "User not found");

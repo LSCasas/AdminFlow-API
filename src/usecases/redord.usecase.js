@@ -13,19 +13,23 @@ const createRecord = async (
   consumableName,
   consumableStock,
   areaName,
-  quantity,
+  consumableQuantity,
   date,
-  signature
+  userSignature
 ) => {
   try {
     let user = await User.findOne({ name: userName });
     if (!user) {
-      user = await createUser(userName);
+      user = await createUser(userName, userSignature);
     }
 
     let consumable = await Consumable.findOne({ name: consumableName });
     if (!consumable) {
-      consumable = await createConsumable(consumableName, consumableStock);
+      consumable = await createConsumable(
+        consumableName,
+        consumableStock,
+        consumableQuantity
+      );
     }
 
     let area = await Area.findOne({ name: areaName });
@@ -37,9 +41,9 @@ const createRecord = async (
       user_id: user._id,
       area_id: area._id,
       consumable_id: consumable._id,
-      quantity,
+      consumableQuantity,
+      userSignature,
       date,
-      signature,
     });
 
     await newRecord.save();

@@ -12,8 +12,8 @@ const {
 // Create a new user
 router.post("/", authMiddleware, async (req, res) => {
   try {
-    const { name } = req.body;
-    const newUser = await createUser(name);
+    const { name, signature } = req.body;
+    const newUser = await createUser(name, signature);
     res.status(201).json({
       success: true,
       data: newUser,
@@ -66,8 +66,8 @@ router.get("/:id", authMiddleware, async (req, res) => {
 router.patch("/:id", authMiddleware, async (req, res) => {
   try {
     const userId = req.params.id;
-    const { name } = req.body;
-    const updatedUser = await updateUserById(userId, name);
+    const { name, signature } = req.body;
+    const updatedUser = await updateUserById(userId, name, signature);
     res.json({
       success: true,
       data: updatedUser,

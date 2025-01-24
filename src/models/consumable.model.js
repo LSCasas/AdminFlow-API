@@ -7,12 +7,16 @@ const consumableSchema = new mongoose.Schema({
     trim: true,
   },
   stock: {
-    type: String,
-    required: true,
+    type: Number,
+    required: false,
   },
   created_at: {
     type: Date,
     default: Date.now,
+  },
+  quantity: {
+    type: Number,
+    required: true,
   },
 });
 

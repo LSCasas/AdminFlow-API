@@ -16,16 +16,8 @@ const recordSchema = new mongoose.Schema({
     ref: "Consumable",
     required: true,
   },
-  quantity: {
-    type: Number,
-    required: true,
-  },
   date: {
     type: Date,
-    required: true,
-  },
-  signature: {
-    type: String,
     required: true,
   },
   created_at: {

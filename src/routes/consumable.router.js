@@ -12,8 +12,17 @@ const {
 // Create a new consumable
 router.post("/", authMiddleware, async (req, res) => {
   try {
-    const { name, stock } = req.body;
-    const newConsumable = await createConsumable(name, stock);
+    const { name, stock, quantity } = req.body;
+
+    // Valida que los campos obligatorios estén presentes
+    if (!name || quantity == null) {
+      return res.status(400).json({
+        success: false,
+        error: "Name and quantity are required",
+      });
+    }
+
+    const newConsumable = await createConsumable(name, stock, quantity);
     res.status(201).json({
       success: true,
       data: newConsumable,
