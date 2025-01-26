@@ -46,16 +46,16 @@ const getConsumableById = async (id) => {
 };
 
 // Update a consumable
-const updateConsumable = async (id, updates) => {
+const updateConsumable = async (id, name, stock, quantity) => {
   try {
-    const updatedConsumable = await Consumable.findByIdAndUpdate(id, updates, {
-      new: true,
-      runValidators: true,
-    });
-
-    if (!updatedConsumable) {
-      throw createError(404, "Consumable not found");
-    }
+    const updatedConsumable = await Consumable.findByIdAndUpdate(
+      id,
+      { name, stock, quantity },
+      {
+        new: true,
+        runValidators: true,
+      }
+    );
 
     return updatedConsumable;
   } catch (error) {

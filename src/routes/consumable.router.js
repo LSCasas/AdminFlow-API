@@ -74,8 +74,13 @@ router.get("/:id", authMiddleware, async (req, res) => {
 router.patch("/:id", authMiddleware, async (req, res) => {
   try {
     const consumableId = req.params.id;
-    const updates = req.body;
-    const updatedConsumable = await updateConsumable(consumableId, updates);
+    const { name, stock, quantity } = req.body;
+    const updatedConsumable = await updateConsumable(
+      consumableId,
+      name,
+      stock,
+      quantity
+    );
     res.json({
       success: true,
       data: updatedConsumable,
