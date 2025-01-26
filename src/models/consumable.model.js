@@ -16,7 +16,7 @@ const consumableSchema = new mongoose.Schema({
   },
   quantity: {
     type: Number,
-    required: true,
+    required: false,
   },
 });
 

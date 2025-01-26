@@ -6,8 +6,8 @@ const createConsumable = async (name, stock, quantity) => {
   try {
     const newConsumable = new Consumable({
       name,
-      stock: stock ?? null, // Usa null si stock no está definido
-      quantity,
+      stock: stock ?? null,
+      quantity: quantity ?? null,
     });
 
     await newConsumable.save();
