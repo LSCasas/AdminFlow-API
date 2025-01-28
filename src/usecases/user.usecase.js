@@ -2,7 +2,7 @@ const User = require("../models/user.model");
 const createError = require("http-errors");
 
 // Create an user
-const createUser = async (name, signature) => {
+const createUser = async (name, signature = null) => {
   try {
     const newUser = new User({ name, signature });
     await newUser.save();

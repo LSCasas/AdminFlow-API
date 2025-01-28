@@ -12,7 +12,7 @@ const userSchema = new mongoose.Schema({
   },
   signature: {
     type: String,
-    required: true,
+    required: false,
   },
 });
 

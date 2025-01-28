@@ -12,7 +12,7 @@ const {
 // Create a new user
 router.post("/", authMiddleware, async (req, res) => {
   try {
-    const { name, signature } = req.body;
+    const { name, signature = null } = req.body; // Establece signature como null por defecto
     const newUser = await createUser(name, signature);
     res.status(201).json({
       success: true,
