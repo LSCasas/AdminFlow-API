@@ -14,23 +14,23 @@ router.post("/", authMiddleware, async (req, res) => {
   try {
     const { name, stock, quantity } = req.body;
 
-    if (!name == null) {
+    if (!name) {
       return res.status(400).json({
         success: false,
         error: "Name is required",
       });
     }
 
-    const newConsumable = await createConsumable(name, stock, quantity);
+    const consumable = await createConsumable(name, stock, quantity);
     res.status(201).json({
       success: true,
-      data: newConsumable,
+      data: consumable,
     });
   } catch (error) {
-    console.error("Error creating consumable:", error);
+    console.error("Error creating/updating consumable:", error);
     res.status(500).json({
       success: false,
-      error: "Error creating consumable",
+      error: "Error creating/updating consumable",
     });
   }
 });

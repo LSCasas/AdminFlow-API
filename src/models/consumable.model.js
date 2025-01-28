@@ -5,6 +5,8 @@ const consumableSchema = new mongoose.Schema({
     type: String,
     required: true,
     trim: true,
+    lowercase: true, // Guarda siempre en minúsculas
+    unique: true, // Asegura que no haya duplicados, insensible a mayúsculas
   },
   stock: {
     type: Number,

@@ -21,6 +21,8 @@ router.post("/", authMiddleware, async (req, res) => {
       date,
       userSignature,
     } = req.body;
+
+    // Asegúrate de pasar consumableQuantity a tempVal
     const newRecord = await createRecord(
       userName,
       consumableName,
@@ -28,8 +30,10 @@ router.post("/", authMiddleware, async (req, res) => {
       areaName,
       consumableQuantity,
       date,
+      consumableQuantity, // Aquí se pasa consumableQuantity como tempVal
       userSignature
     );
+
     res.status(201).json({
       success: true,
       data: newRecord,

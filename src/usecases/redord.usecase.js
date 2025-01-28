@@ -15,6 +15,7 @@ const createRecord = async (
   areaName,
   consumableQuantity,
   date,
+  tempVal, // Recibe el valor de tempVal
   userSignature
 ) => {
   try {
@@ -23,8 +24,19 @@ const createRecord = async (
       user = await createUser(userName, userSignature);
     }
 
-    let consumable = await Consumable.findOne({ name: consumableName });
-    if (!consumable) {
+    // Normaliza el nombre del consumible a minúsculas
+    const normalizedConsumableName = consumableName.trim().toLowerCase();
+
+    let consumable = await Consumable.findOne({
+      name: normalizedConsumableName,
+    });
+
+    // Si el consumible existe, actualiza la cantidad
+    if (consumable) {
+      consumable.quantity += consumableQuantity; // Suma la cantidad
+      await consumable.save(); // Guarda el consumible actualizado
+    } else {
+      // Si no existe, crea un nuevo consumible
       consumable = await createConsumable(
         consumableName,
         consumableStock,
@@ -42,6 +54,7 @@ const createRecord = async (
       area_id: area._id,
       consumable_id: consumable._id,
       date,
+      tempVal: consumableQuantity, // Asigna consumableQuantity a tempVal
     });
 
     await newRecord.save();

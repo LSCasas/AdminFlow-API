@@ -4,16 +4,33 @@ const createError = require("http-errors");
 // Create a consumable
 const createConsumable = async (name, stock, quantity) => {
   try {
-    const newConsumable = new Consumable({
-      name,
-      stock: stock ?? null,
-      quantity: quantity ?? null,
-    });
+    // Busca si ya existe un consumible con el mismo nombre
+    const existingConsumable = await Consumable.findOne({ name: name });
 
-    await newConsumable.save();
-    return newConsumable;
+    if (existingConsumable) {
+      // Si existe, actualiza el stock y/o cantidad
+      existingConsumable.stock = (existingConsumable.stock ?? 0) + (stock ?? 0);
+      existingConsumable.quantity =
+        (existingConsumable.quantity ?? 0) + (quantity ?? 0);
+      existingConsumable.tempVal = existingConsumable.quantity; // Establece tempVal igual a quantity
+      await existingConsumable.save();
+      return existingConsumable; // Devuelve el consumible actualizado
+    } else {
+      // Si no existe, crea un nuevo consumible
+      const newConsumable = new Consumable({
+        name,
+        stock: stock ?? null,
+        quantity: quantity ?? null,
+        tempVal: quantity ?? null, // Establece tempVal igual a quantity
+      });
+      await newConsumable.save();
+      return newConsumable;
+    }
   } catch (error) {
-    throw createError(500, "Error creating consumable: " + error.message);
+    throw createError(
+      500,
+      "Error creating/updating consumable: " + error.message
+    );
   }
 };
 

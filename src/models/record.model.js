@@ -24,6 +24,10 @@ const recordSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  tempVal: {
+    type: Number,
+    required: false,
+  },
 });
 
 const Record = mongoose.model("Record", recordSchema);
