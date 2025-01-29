@@ -15,7 +15,8 @@ const createRecord = async (
   areaName,
   consumableQuantity,
   date,
-  tempVal, // Recibe el valor de tempVal
+  tempVal,
+  conName,
   userSignature
 ) => {
   try {
@@ -55,6 +56,7 @@ const createRecord = async (
       area_id: area._id,
       consumable_id: consumable._id,
       date,
+      conName: String(consumableName),
       tempVal: Number(consumableQuantity), // Asegura que sea un número
     });
 

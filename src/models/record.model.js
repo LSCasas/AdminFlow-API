@@ -28,6 +28,10 @@ const recordSchema = new mongoose.Schema({
     type: Number,
     required: false,
   },
+  conName: {
+    type: String,
+    required: false,
+  },
 });
 
 const Record = mongoose.model("Record", recordSchema);

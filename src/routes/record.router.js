@@ -30,7 +30,8 @@ router.post("/", authMiddleware, async (req, res) => {
       areaName,
       consumableQuantity,
       date,
-      consumableQuantity, // Aquí se pasa consumableQuantity como tempVal
+      consumableQuantity,
+      consumableName,
       userSignature
     );
 
