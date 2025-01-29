@@ -33,7 +33,8 @@ const createRecord = async (
 
     // Si el consumible existe, actualiza la cantidad
     if (consumable) {
-      consumable.quantity += consumableQuantity; // Suma la cantidad
+      consumable.quantity =
+        Number(consumable.quantity) + Number(consumableQuantity); // Asegura que sean números
       await consumable.save(); // Guarda el consumible actualizado
     } else {
       // Si no existe, crea un nuevo consumible
@@ -54,7 +55,7 @@ const createRecord = async (
       area_id: area._id,
       consumable_id: consumable._id,
       date,
-      tempVal: consumableQuantity, // Asigna consumableQuantity a tempVal
+      tempVal: Number(consumableQuantity), // Asegura que sea un número
     });
 
     await newRecord.save();
@@ -63,7 +64,6 @@ const createRecord = async (
     throw createError(500, "Error creating record: " + error.message);
   }
 };
-
 // Get all records
 const getRecords = async (filter = {}) => {
   try {
