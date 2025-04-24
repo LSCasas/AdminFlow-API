@@ -1,7 +1,7 @@
 # AdminFlow - API
 
 The API focuses on managing users, areas, consumables, and usage records. It provides functionalities for authentication, user management, area and consumable handling, and record registration. It generates Excel reports on demand. Designed with clean architecture principles, the API ensures modularity, scalability, and maintainability for efficient resource tracking.
-
+ 
 ## Getting Started
 
 To get started with the project, follow these steps:
