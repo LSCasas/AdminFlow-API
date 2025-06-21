@@ -1,65 +1,124 @@
 # AdminFlow - API
 
 The API focuses on managing users, areas, consumables, and usage records. It provides functionalities for authentication, user management, area and consumable handling, and record registration. It generates Excel reports on demand. Designed with clean architecture principles, the API ensures modularity, scalability, and maintainability for efficient resource tracking.
- 
-## Getting Started
 
-To get started with the project, follow these steps:
+---
 
-1. Clone this repository to your Linux console:
+## Project Structure
 
-   ```bash
-   git git@github.com:LSCasas/DevTo-API.git
-   cd DevTo-API
+```
+AdminFlow-API/               # Main project directory
+├── README.md                # Project documentation
+├── example.env              # Example environment variables
+├── index.js                 # Entry point of the application
+├── package.json             # Project metadata and dependencies
+├── vercel.json              # Deployment configuration for Vercel
+├── request/                 # (Optional) Directory for API request samples
+└── src/                     # Source code
+    ├── lib/                 # Utility functions and libraries
+    ├── middleware/          # Middleware (authentication, validation, etc.)
+    ├── models/              # MongoDB models with Mongoose
+    ├── routes/              # API route definitions
+    ├── server.js            # Express server configuration
+    └── usecases/            # Application business logic / controllers
+```
 
-   ```
+---
 
-2. Install dependencies:
+## Features
 
-   ```bash
-   npm install
+- **Modular Routing**: Routes organized into separate files for scalability.
+- **Data Models**: Defined using **Mongoose** for structured interaction with MongoDB.
+- **Authentication**: Secure user authentication with **JWT** and hashed passwords using **bcrypt**.
+- **Middleware**: Centralized middlewares for authentication, validation, and error handling.
+- **Environment Configuration**: Secure management of sensitive information with **dotenv**.
+- **RESTful Design**: Consistent, clear API endpoints following REST principles.
 
-   ```
+---
 
-3. Start the development server:
-   ```bash
-    npm run dev
-   ```
+## Technologies
 
-## How to Run
+- **Node.js**
+- **Express**
+- **MongoDB**
+- **jsonwebtoken**
+- **bcrypt**/**bcryptjs**
+- **dotenv**
+- **cors**
+- **http-errors**
 
-1. **Install dependencies**
+---
 
-   ```bash
-   npm install
-   ```
+## How to Use This Project
 
-2. **Create an `.env` file**
+1. **Clone the repository**:
 
-   ```bash
-   touch .env
-   ```
+```bash
+git clone https://github.com/LSCasas/AdminFlow-API.git
+cd AdminFlow-API
+```
 
-   You can find the keys needed in the `example.env` file.
+2. **Install dependencies**:
 
-3. **Run in development mode**
+```bash
+npm install
+```
 
-   ```bash
-   npm run dev
-   ```
+3. **Create an environment configuration file**:
 
-4. **Run in production mode**
+```bash
+cp example.env .env
+```
 
-   ```bash
-   npm start
-   ```
+4. **Edit the `.env` file** with your configurations:
 
-   ## Learn More
+```
+DB_USER=
+DB_PASSWORD=
+DB_HOST=
+DB_NAME=
 
-To learn more about Express, Mongoose, and using environment variables, check out the following resources:
+```
 
-- [Express Documentation](https://expressjs.com) - Learn about Express.js features.
-- [Mongoose Documentation](https://mongoosejs.com) - Learn about Mongoose and MongoDB integration.
-- [Dotenv Documentation](https://www.npmjs.com/package/dotenv) - Learn about managing environment variables in Node.js.
+5. **Run the server**:
 
-Your feedback and contributions to this project are welcome!
+```bash
+npm run dev
+```
+
+---
+
+## Requirements
+
+- Node.js >= 18.x
+- npm
+- MongoDB database (local or Atlas)
+- Vercel account (optional for deployment)
+
+---
+
+## Deployment
+
+This project is configured for **Vercel** deployment:
+
+```bash
+vercel deploy
+```
+
+---
+
+## Example Authentication Request
+
+1. Request token:
+
+```
+POST /api/login
+Content-Type: application/json
+
+{
+  "email": "test@example.com",
+  "password": "password123"
+}
+```
+
+---
