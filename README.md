@@ -1,13 +1,25 @@
-# AdminFlow - API
+# AdminFlow
 
-The API focuses on managing users, areas, consumables, and usage records. It provides functionalities for authentication, user management, area and consumable handling, and record registration. It generates Excel reports on demand. Designed with clean architecture principles, the API ensures modularity, scalability, and maintainability for efficient resource tracking.
+A Node.js API for managing users, areas, consumables, and usage records. Built with clean architecture principles to ensure modularity, scalability, and maintainability. It provides secure authentication, structured MongoDB models, and on-demand Excel report generation.
+
+---
+
+## Table of Contents
+
+- [Project Structure](#project-structure)
+- [Features](#features)
+- [Installation](#installation)
+- [Usage](#how-to-use-this-project)
+- [Requirements](#requirements)
+- [Contribution](#contribution)
+- [Learn More](#learn-more)
 
 ---
 
 ## Project Structure
 
 ```
-AdminFlow-API/               # Main project directory
+AdminFlow-API/
 ├── README.md                # Project documentation
 ├── example.env              # Example environment variables
 ├── index.js                 # Entry point of the application
@@ -27,63 +39,68 @@ AdminFlow-API/               # Main project directory
 
 ## Features
 
-- **Modular Routing**: Routes organized into separate files for scalability.
-- **Data Models**: Defined using **Mongoose** for structured interaction with MongoDB.
-- **Authentication**: Secure user authentication with **JWT** and hashed passwords using **bcrypt**.
-- **Middleware**: Centralized middlewares for authentication, validation, and error handling.
-- **Environment Configuration**: Secure management of sensitive information with **dotenv**.
-- **RESTful Design**: Consistent, clear API endpoints following REST principles.
+- Modular route structure for scalability
+- Mongoose-based MongoDB models
+- JWT-based authentication and bcrypt password hashing
+- Centralized middleware for validation and error handling
+- Environment configuration using dotenv
+- RESTful API design
+- Excel report generation
 
 ---
 
-## Technologies
+## Installation
 
-- **Node.js**
-- **Express**
-- **MongoDB**
-- **jsonwebtoken**
-- **bcrypt**/**bcryptjs**
-- **dotenv**
-- **cors**
-- **http-errors**
+1. **Clone the repository:**
+
+   ```bash
+   git clone https://github.com/LSCasas/AdminFlow-API.git
+   cd AdminFlow-API
+   ```
+
+2. **Install dependencies:**
+
+   ```bash
+   npm install
+   ```
+
+3. **Configure environment variables:**
+
+   Copy the example file and edit your settings:
+
+   ```bash
+   cp example.env .env
+   ```
+
+4. **Edit the `.env` file** with your configurations:
+
+   ```env
+   DB_USER=
+   DB_PASSWORD=
+   DB_HOST=
+   DB_NAME=
+   ```
+
+5. **Run the server:**
+
+   ```bash
+   npm run dev
+   ```
 
 ---
 
 ## How to Use This Project
 
-1. **Clone the repository**:
+### Example Requests
+
+Use `curl` or Postman to test routes.
+
+**1. Authenticate and get token:**
 
 ```bash
-git clone https://github.com/LSCasas/AdminFlow-API.git
-cd AdminFlow-API
-```
-
-2. **Install dependencies**:
-
-```bash
-npm install
-```
-
-3. **Create an environment configuration file**:
-
-```bash
-cp example.env .env
-```
-
-4. **Edit the `.env` file** with your configurations:
-
-```
-DB_USER=
-DB_PASSWORD=
-DB_HOST=
-DB_NAME=
-
-```
-
-5. **Run the server**:
-
-```bash
-npm run dev
+curl -X POST http://localhost:3000/api/login \
+  -H "Content-Type: application/json" \
+  -d '{"email": "test@example.com", "password": "password123"}'
 ```
 
 ---
@@ -92,33 +109,47 @@ npm run dev
 
 - Node.js >= 18.x
 - npm
-- MongoDB database (local or Atlas)
+- MongoDB (local or Atlas)
 - Vercel account (optional for deployment)
 
 ---
 
-## Deployment
+## Contribution
 
-This project is configured for **Vercel** deployment:
+If you want to contribute to this project, follow the steps below:
 
-```bash
-vercel deploy
-```
+1. Fork the repository.
+
+2. Create a new branch for your feature:
+
+   ```bash
+   git checkout -b feature/new-feature
+   ```
+
+3. Make your changes.
+
+4. Commit your changes:
+
+   ```bash
+   git commit -am 'Add new feature'
+   ```
+
+5. Push your changes to your fork:
+
+   ```bash
+   git push origin feature/new-feature
+   ```
+
+6. Create a Pull Request for your changes to be reviewed and merged into the main project.
 
 ---
 
-## Example Authentication Request
+## 📚 Learn More
 
-1. Request token:
-
-```
-POST /api/login
-Content-Type: application/json
-
-{
-  "email": "test@example.com",
-  "password": "password123"
-}
-```
+- [Node.js Documentation](https://nodejs.org/en/docs/)
+- [Express Documentation](https://expressjs.com/)
+- [Mongoose Documentation](https://mongoosejs.com/docs/)
+- [dotenv Documentation](https://github.com/motdotla/dotenv)
+- [Vercel Documentation](https://vercel.com/docs)
 
 ---
